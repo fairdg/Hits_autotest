@@ -1,0 +1,63 @@
+<!-- Правильный вариант -->
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <title>Кубикаталог — настольные игры</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 24px; background: #f7f4ee; color: #2b2b2b; }
+    h1 { font-size: 24px; }
+    #catalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; margin-top: 16px; }
+    .game-card { background: #fff; border: 1px solid #d8d2c8; border-radius: 8px; padding: 12px; }
+    .game-img { width: 64px; height: 64px; image-rendering: pixelated; background: #efe9df; border-radius: 4px; }
+    .game-name { font-size: 16px; margin: 10px 0 4px; }
+    .game-desc { font-size: 13px; color: #555; margin: 4px 0; }
+    .game-price { font-weight: 700; margin: 10px 0 0; }
+    .pager { margin-top: 20px; display: flex; gap: 12px; align-items: center; }
+    .pager-btn { padding: 6px 14px; font-size: 14px; cursor: pointer; }
+    .pager-btn:disabled { color: #aaa; cursor: default; }
+    .page-indicator { font-size: 14px; min-width: 110px; text-align: center; }
+  </style>
+</head>
+<body>
+  <h1>Кубикаталог</h1>
+  <main id="catalog"></main>
+  <nav class="pager">
+    <button id="prev" class="pager-btn" onclick="showPage(currentPage - 1)">← Назад</button>
+    <span id="page-indicator" class="page-indicator"></span>
+    <button id="next" class="pager-btn" onclick="showPage(currentPage + 1)">Далее →</button>
+  </nav>
+  <script>
+    const GAMES = [{"name":"Драконы и кредиторы","desc":"Драконы берут кредиты, а игроки — проценты. Финансовый ужас.","price":1090,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAVklEQVR4nGNgGPKAEZnzvyvvPyENlVM2MHQ8egTXx0SpC1iQOdd3X2dgYGBg0Ny1C8J3c8PKRwbUdQHcJUTYTFsXDFwYLLp5E8KQl0dVhc6npguGAQAAs1AcuE0UJPEAAAAASUVORK5CYII="},{"name":"Последний поезд","desc":"Продержись ночь на крыше последнего поезда до самого рассвета.","price":1790,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAR0lEQVR4nGNgwAP+d+X9v+bq+h+fGiZ8ksSAUQNGDWBgYGBgRBeokJPDm/I6Hj3C0IMT/D8R/v//ifBBnpRZ8ElWhh2nvQsAfVYRQ5ZEycsAAAAASUVORK5CYII="},{"name":"Сады бездны","desc":"Выращивай растения, которые любят темноту и умеют смотреть.","price":2490,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAf0lEQVR4nGNgGPKAEV3gmqvrfxh70c2bDAwMDAxx6upwea3du1H0sKAboOmqieBADUAR270bRT2GAdd3X8dwJjYxGGDCKUMkQDEA2f+4ALoaDC/AgGazEEM7gyWcf732HWEXkANwuuB67Tus0Uh1Fwy8ARigQk4OZ1Rik6PYBQANDiFu6ikDvQAAAABJRU5ErkJggg=="},{"name":"Гномы в арендном доме","desc":"Арендуй гномов, собирай оброк, прячься от ревизоров.","price":3190,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAVUlEQVR4nGNgoBAwYhP8////f6yKGRkx1DMRqxmXHIYBpAKsBkhJqTBISang5FPVBRiBguxPmK3Pnt1BaMASkBjg/////yUllf+j09jUUuyFUTAsAADhpiRVJpCyxwAAAABJRU5ErkJggg=="},{"name":"Туманный прилив","desc":"Морской бой, где туман прячет и врагов, и союзников.","price":3890,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAe0lEQVR4nGNkwAH+nwj/j8xntFjJiE0dEy4DqALuPPvw/86zD//xqaHYBRQbgBEwhJysIiWAoodiF7BgE1ReUodV8d2YJgwx2rjg+u7rDJq7djFcd3NDEWeLwVSL0wXImjV37cLpAqK8gO4SZEBxNGKEwZGT54hx1CACAHIeIwlDtlWdAAAAAElFTkSuQmCC"},{"name":"Корова-метеорит","desc":"Загони корову к метеориту, пока лужайку не прожгло.","price":1490,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAWElEQVR4nGNgGPKAEZkz4dT//4Q09BU1Mzw6UgfXx0SpC1iQOZv2fmNgYGBg2FvBxcDAwMDg3IGdjwyo6wIYIMZm2rqArmGAkg7kbJoIpgMGBgbqpoNhAACTUh4/vjHIygAAAABJRU5ErkJggg=="},{"name":"Штурвал","desc":"Один рулит, остальные — это погода. Нестабильно, как в жизни.","price":2190,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASElEQVR4nGNgwAMmnPr/36n96398apjwSRIDRg0YNYCBgYGBEV1AzqYJb8p7dKQOQw9O8P9axf//1yoGeVJmwScpn8ZFexcAAHlCEVq87jSwAAAAAElFTkSuQmCC"},{"name":"Бабушкины чары","desc":"Готовь зелья по бабушкиным рецептам. Рецепты неполные намеренно.","price":2890,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAf0lEQVR4nGNgGPKAEV3Aqf3rfxj7ztZeBgYGBgYV72K4/L5KbhQ9LOgG+Dlzwdl9WzHF9qGpxzBg095vGM7EJgYDTDhliAQoBiD7HxdAV4PhBRjY69/MwOAP4zUzOG+sJewCcgBOFzhvrMUajVR3wcAbgAHkbJpwRiU2OYpdAAB6SyCUPVRl0AAAAABJRU5ErkJggg=="},{"name":"Неоновые рубежи","desc":"Строй кибер-империю в неоне и вечном дожде.","price":3590,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAVUlEQVR4nGNgoBAwYhP8////f6yKGRkx1DMRqxmXHIYBpAKsBkhJqTBISang5FPVBRiBguxPmK3Pnt1BaMASkBjg/////yUllf+j09jUUuyFUTAsAADhpiRVJpCyxwAAAABJRU5ErkJggg=="},{"name":"Карточный штраф","desc":"Укради карточку у банка — и не попадисься надзорнику.","price":1190,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAeklEQVR4nGNkwAH+X6v4j8xn1OpgxKaOCZcBVAF3nn34f+fZh//41FDsAooNwAgYQk5WkRJA0UOxC1iwCW55wo9VsY/MRwwx2rhg095vDHsruBicO76huiAeUy1OFyBr3lvBhdMFRHkB3SXIgOJoxAiDIyfPEeOoQQQAVzojrDWweBkAAAAASUVORK5CYII="},{"name":"Лес из одного дерева","desc":"Строй цивилизацию вокруг единственного дерева. Оно растёт.","price":1890,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAWklEQVR4nGNgGPKAEZmz6dm0/4Q0FNbNYbg75xxcHxOlLmBB5iy5cYCBgYGBYaXjSgYGBgaG8P3hWPnIgLougAFibKatC+gaBijpQDnFiGA6YGBgoG46GAYAAGwtHcJlaasqAAAAAElFTkSuQmCC"},{"name":"Командир таракан","desc":"Веди колонию по вентиляции. Свет — смертельно опасен.","price":2590,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASElEQVR4nGNgwAM2PZv2P2xf2H98apjwSRIDRg0YNYCBgYGBEV1AOcUIb8q7O+cchh6c4P+J8P//T4QP8qTMgk9SZc5t2rsAAH7UEYnGTdl/AAAAAElFTkSuQmCC"},{"name":"Пикник в апокалипсис","desc":"Успеть расстелить плед раньше конца света.","price":3290,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAgUlEQVR4nGNgGPKAEV0gbF/Yfxj77LI7DAwMDAzGUSpw+VVOq1D0sKAbEKPhAGefZbiDIbaKYRWKegwDltw4gOFMbGIwwIRThkiAYgCy/3EBdDUYXoCBlVyMDAwpqnB++DfsZlPsBZwuCP/2H2s0Ut0FA28ABlBOMcIZldjkKHYBAHteITQYSqQKAAAAAElFTkSuQmCC"},{"name":"Гильдии и гонорары","desc":"Собери контору магов, поссорись из-за гонораров, спаси город.","price":3990,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAVUlEQVR4nGNgoBAwYhP8////f6yKGRkx1DMRqxmXHIYBpAKsBkhJqTBISang5FPVBRiBguxPmK3Pnt1BaMASkBjg/////yUllf+j09jUUuyFUTAsAADhpiRVJpCyxwAAAABJRU5ErkJggg=="},{"name":"Каменный договор","desc":"Торгуйся с горами: у них тоже есть интересы.","price":1590,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAeUlEQVR4nGNkwAH+nwj/j8xntFjJiE0dEy4DqALuPPvw/86zD//xqaHYBRQbgBEwhJysIiWAoodiF7BgE7zGsAyrYi2GKAwx2rhgyY0DDCsdVzKE7w9HEW/TIMEFyJpXOq7E6QKivIDuEmRAcTRihMGRk+eIcdQgAgAkTyKMU0+oYwAAAABJRU5ErkJggg=="},{"name":"Орбита чая","desc":"Чайная станция на орбите: заваривай — и не перевернись.","price":2290,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAWElEQVR4nGNgGPKAEZlzYcmn/4Q0NLS0MWy40QHXx0SpC1iQOae3PWBgYGBgSFmqy8DAwMAwJ/oyVj4yoK4LYIAYm2nrgoELg63nlkFoTVRF6HyqumAYAAC+Ex4sTb0Y/QAAAABJRU5ErkJggg=="},{"name":"Подземелье без монстра","desc":"Лабиринт, из которого исчез главный злодей. Это хуже.","price":2990,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASElEQVR4nGNgwAMuLPn0f3bUpf/41DDhkyQGjBowagADAwMDI7pAgEYF3pS34UYHhh6c4P+div//7+A3cODDgAWfZKAPHVwAAOajEYr0nY8PAAAAAElFTkSuQmCC"},{"name":"Бухгалтерия ведьм","desc":"Принимай подношения, сдавай магию в отчёты, переживи ревизию.","price":3690,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAgElEQVR4nGNgGPKAEV1gdtSl/zD21nPLGBgYGBi8jaLg8qnL9FD0sKAbYOqlAGdvPYcpxrAMVT2GAae3PcBwJjYxGGDCKUMkQDEA2f+4ALoaDC/AQErTMoYUOG8Zw5y6KKzqKPYCThfMqYvCGo1Ud8HAG4ABAjQqcEYlNjmKXQAAmzYhMcDQRrMAAAAASUVORK5CYII="},{"name":"Севернее зимы","desc":"Экспедиция, где мороз копится, а карты заканчиваются.","price":1290,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAVUlEQVR4nGNgoBAwYhP8////f6yKGRkx1DMRqxmXHIYBpAKsBkhJqTBISang5FPVBRiBguxPmK3Pnt1BaMASkBjg/////yUllf+j09jUUuyFUTAsAADhpiRVJpCyxwAAAABJRU5ErkJggg=="},{"name":"Мост из извинений","desc":"Договаривайся без выстрелов: слово здесь — оружие.","price":1990,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAeUlEQVR4nGNkwAH+36n4j8xnVOlgxKaOCZcBVAF3nn34f+fZh//41FDsAooNwAgYQk5WkRJA0UOxC1iwCX7Zh91cHqd/GGK0ccHpbQ8YUpbqMsyJvowi7ugkR7wLkDWnLNXF6QKivIDuEmRAcTRihMGRk+eIcdQgAgBM9SOna74J9AAAAABJRU5ErkJggg=="},{"name":"Смена охраны","desc":"Ночной дозор на стене. Смена короче, чем хочется.","price":2690,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAVklEQVR4nGNgGPKAEZnz/1DJf0IaelsWMJTsegPXx0SpC1iQOR9P7WNgYGBg4C8+C+H3GmPlIwPqugDuEiJspq0LBi4M5ux6BGHsEkVVhc6npguGAQAAtKceHE6jSFQAAAAASUVORK5CYII="},{"name":"Рынок на рассвете","desc":"Покупай слухи, пока город спит, продавай с наценкой.","price":3390,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASElEQVR4nGNgwAP+Hyr5/6HH6D8+NUz4JIkBowaMGsDAwMDAiC7Q4yaCN+WV7HqDoQcn+P9h3///H/YN8qTMgk+yNyyM9i4AAM3DEpCnxfAlAAAAAElFTkSuQmCC"},{"name":"Голубая шахта","desc":"Копай до голубой жилы — но не разбуди того, кто внизу.","price":4090,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAfklEQVR4nGNgGPKAEV3gQ4/Rfxh7zq5HDAwMDAwpbnJweYGScyh6WNAN4DdzQnB2LcAUYziHoh7DgI+n9mE4E5sYDDDhlCESoBiA7H9cAF0NhhdggD+lh6E4BcH/OKeEsAvIAThd8HFOCdZopLoLBt4ADNDjJoIzKrHJUewCAHhTIUR92U5GAAAAAElFTkSuQmCC"},{"name":"Топливо для кометы","desc":"Заправь комету так, чтобы она улетела — и забрала тебя с собой.","price":1690,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAVUlEQVR4nGNgoBAwYhP8////f6yKGRkx1DMRqxmXHIYBpAKsBkhJqTBISang5FPVBRiBguxPmK3Pnt1BaMASkBjg/////yUllf+j09jUUuyFUTAsAADhpiRVJpCyxwAAAABJRU5ErkJggg=="},{"name":"Финальная партия","desc":"Игра о последней партии, в которой кто-то всегда проигрывает.","price":2390,"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAd0lEQVR4nGNkwAH+f9j3H5nPKODEiE0dEy4DqALuPPvw/86zD//xqaHYBRQbgBEwhJysIiWAoodiF7BgE1S+04JV8V2VGgwx2rjg46l9DPzFZxk+9hqjSpDiAmTN/MVncbqAKC9guAQJUByNGGFw5OQ5Yhw1iAAAWMsjpftBfRsAAAAASUVORK5CYII="}];
+    const PER_PAGE = 5;
+    const TOTAL_PAGES = Math.ceil(GAMES.length / PER_PAGE);
+    let currentPage = 1;
+
+    function cardTemplate(g) {
+      return `<article class="game-card">
+        <img class="game-img" src="${g.img}" alt="${g.name}">
+        <h2 class="game-name">${g.name}</h2>
+        <p class="game-desc">${g.desc}</p>
+        <p class="game-price">${g.price} ₽</p>
+      </article>`;
+    }
+
+    function render() {
+      const start = (currentPage - 1) * PER_PAGE;
+      const items = GAMES.slice(start, start + PER_PAGE);
+      document.getElementById("catalog").innerHTML = items.map(cardTemplate).join("");
+      document.getElementById("page-indicator").textContent =
+        "Страница " + currentPage + " из " + TOTAL_PAGES;
+      document.getElementById("prev").disabled = currentPage === 1;
+      document.getElementById("next").disabled = currentPage === TOTAL_PAGES;
+    }
+
+    function showPage(n) {
+      currentPage = Math.min(Math.max(1, n), TOTAL_PAGES);
+      render();
+    }
+
+    render();
+  </script>
+</body>
+</html>

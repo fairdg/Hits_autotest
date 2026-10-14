@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Горизонт — авторские путешествия по России и миру">
+  <title>Горизонт — путешествия, которые остаются с вами</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#search">Перейти к поиску тура</a>
+
+  <header class="hero" id="top">
+    <nav class="site-nav" aria-label="Главная навигация">
+      <a class="logo" href="#top">ГОРИЗОНТ</a>
+      <div class="nav-links">
+        <a href="#destinations">Направления</a>
+        <a href="#tours">Туры</a>
+        <a href="#journal">Журнал</a>
+        <a href="#about">О нас</a>
+      </div>
+      <div class="nav-actions">
+        <a class="phone" href="tel:+74951202420">+7 495 120-24-20</a>
+        <button class="account-button" id="account-button" type="button" aria-label="Открыть личный кабинет">
+          <img src="assets/image-6b058ee1e551.svg" alt="">
+          <span id="account-label">Войти</span>
+        </button>
+      </div>
+    </nav>
+
+    <button class="mobile-menu-button" id="mobile-menu-button" type="button" aria-label="Открыть меню">Меню</button>
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <a href="#destinations">Направления</a>
+      <a href="#tours">Туры</a>
+      <a href="#journal">Журнал</a>
+      <a href="#about">О нас</a>
+      <button type="button" id="mobile-account-button">Личный кабинет</button>
+    </div>
+
+    <div class="hero-copy">
+      <p class="overline overline--light">Путешествия, которые остаются с вами</p>
+      <h1>Мир становится ближе,<br>когда знаешь куда</h1>
+      <p>Авторские маршруты, настоящие места и забота на каждом километре пути.</p>
+    </div>
+
+    <form class="search-panel" id="search" novalidate>
+      <label class="search-field" for="destination">
+        <span>Куда</span>
+        <select id="destination" name="destination">
+          <option value="">Выберите направление</option>
+          <option value="Москва">Москва</option>
+          <option value="Санкт-Петербург">Санкт-Петербург</option>
+          <option value="Алтай">Алтай</option>
+          <option value="Дагестан">Дагестан</option>
+          <option value="Исландия">Исландия</option>
+          <option value="Япония">Япония</option>
+          <option value="Камчатка">Камчатка</option>
+        </select>
+      </label>
+      <label class="search-field" for="travel-date">
+        <span>Когда</span>
+        <input id="travel-date" name="date" type="date">
+      </label>
+      <label class="search-field" for="travelers">
+        <span>Путешественники</span>
+        <select id="travelers" name="travelers">
+          <option value="1">1 человек</option>
+          <option value="2" selected>2 человека</option>
+          <option value="3">3 человека</option>
+          <option value="4">4 человека</option>
+        </select>
+      </label>
+      <button class="pill-button" id="search-button" type="submit">
+        Найти путешествие <span aria-hidden="true">↗</span>
+      </button>
+    </form>
+  </header>
+
+  <main>
+    <section class="search-results section" id="search-results" aria-labelledby="results-title" hidden>
+      <div class="section-heading">
+        <div>
+          <p class="overline">Результаты поиска</p>
+          <h2 id="results-title">Подходящие путешествия</h2>
+        </div>
+        <button class="text-button" id="clear-search" type="button">Сбросить фильтры</button>
+      </div>
+      <div class="tour-grid" id="results-list"></div>
+      <div class="empty-results" id="empty-results" hidden>
+        <strong>По этому направлению туров пока нет</strong>
+        <p>Выберите другое направление или сбросьте фильтры.</p>
+      </div>
+    </section>
+
+    <section class="section" id="destinations" aria-labelledby="destinations-title">
+      <div class="section-heading">
+        <div>
+          <p class="overline">Карта впечатлений</p>
+          <h2 id="destinations-title">От знакомых широт до края света</h2>
+          <p class="section-description">Места с характером — выберите направление, а детали мы возьмём на себя.</p>
+        </div>
+        <button class="pill-button compact" type="button" data-scroll-search>Все направления <span>↗</span></button>
+      </div>
+      <div class="destination-grid">
+        <button class="destination-card" type="button" data-destination="Алтай" style="--image:url('assets/image-647b8da147b0.jpg')">
+          <span>Россия · от 7 дней</span><strong>Алтай</strong>
+        </button>
+        <button class="destination-card" type="button" data-destination="Исландия" style="--image:url('assets/image-a0940893e483.jpg')">
+          <span>Европа · от 8 дней</span><strong>Исландия</strong>
+        </button>
+        <button class="destination-card" type="button" data-destination="Дагестан" style="--image:url('assets/image-20477fb8015e.jpg')">
+          <span>Россия · от 5 дней</span><strong>Дагестан</strong>
+        </button>
+      </div>
+    </section>
+
+    <section class="section section--soft" id="tours" aria-labelledby="tours-title">
+      <div class="section-heading">
+        <div>
+          <p class="overline">Ближайшие старты</p>
+          <h2 id="tours-title">Путешествия, в которые можно влюбиться</h2>
+        </div>
+      </div>
+      <div class="tour-grid" id="featured-tours"></div>
+    </section>
+
+    <section class="promise-section" id="about" aria-labelledby="promise-title">
+      <div>
+        <p class="overline overline--lime">Почему Горизонт</p>
+        <h2 id="promise-title">Спокойствие начинается задолго до вылета</h2>
+      </div>
+      <div class="promise-grid">
+        <article><span>01</span><h3>Эксперты на месте</h3><p>Маршруты создают люди, которые знают регион изнутри.</p></article>
+        <article><span>02</span><h3>Забота 24/7</h3><p>Остаёмся на связи до, во время и после путешествия.</p></article>
+        <article><span>03</span><h3>Честная цена</h3><p>Фиксируем стоимость и заранее объясняем, что в неё входит.</p></article>
+        <article><span>04</span><h3>Маленькие группы</h3><p>До 12 человек, чтобы сохранить свободу и внимание.</p></article>
+      </div>
+    </section>
+
+    <section class="section formats" aria-labelledby="formats-title">
+      <div class="section-heading">
+        <div><p class="overline">Форматы путешествий</p><h2 id="formats-title">Как вы хотите почувствовать мир?</h2></div>
+      </div>
+      <div class="format-grid">
+        <article><img src="assets/image-57295c345a30.svg" alt=""><span>Экспедиция</span></article>
+        <article><img src="assets/image-e4abb3570812.svg" alt=""><span>Море и острова</span></article>
+        <article><img src="assets/image-3a978d7c2434.svg" alt=""><span>Гастрономия</span></article>
+        <article><img src="assets/image-57295c345a30.svg" alt=""><span>Семейный отпуск</span></article>
+        <article><img src="assets/image-14d479ea0aa3.svg" alt=""><span>Город и культура</span></article>
+      </div>
+    </section>
+
+    <section class="story-section">
+      <img src="assets/image-1cc06ecef2fa.jpg" alt="Горная долина Алтая">
+      <div class="story-copy">
+        <p class="overline">Путешествие месяца</p>
+        <h2>Туда, где ветер рисует путь</h2>
+        <p>Большой Алтай: перевалы, озёра и тишина, которую хочется увезти с собой.</p>
+        <ol><li><span>01</span>Барнаул и знакомство</li><li><span>02</span>Чуйский тракт</li><li><span>03</span>Марсианские пейзажи</li><li><span>04</span>Телецкое озеро</li></ol>
+        <button class="pill-button compact" type="button" data-tour-id="T3">Смотреть маршрут <span>↗</span></button>
+      </div>
+    </section>
+
+    <section class="quote-section">
+      <blockquote>«Самое ценное — не галочка на карте, а момент, когда вокруг становится тихо и ты снова слышишь себя».</blockquote>
+      <p><strong>Мария Волкова</strong><br>Большой Алтай · июнь 2026<br>★★★★★</p>
+    </section>
+
+    <section class="section reviews" aria-labelledby="reviews-title">
+      <div class="section-heading"><div><p class="overline">Истории путешественников</p><h2 id="reviews-title">Впечатления, которым доверяют</h2></div></div>
+      <div class="review-grid" id="home-reviews">
+        <article><b>“</b><p>Всё было так, как и мечталось. При этом маршрут оказался живым и настоящим.</p><span>Анна Лебедева<br>Алтай</span></article>
+        <article><b>“</b><p>Редкое сочетание свободы и продуманности. Ни одной лишней остановки.</p><span>Сергей Орлов<br>Исландия</span></article>
+        <article><b>“</b><p>Мы вернулись с ощущением, будто прожили маленькую отдельную жизнь.</p><span>Елена Морозова<br>Япония</span></article>
+      </div>
+    </section>
+
+    <section class="section section--soft" id="journal" aria-labelledby="journal-title">
+      <div class="section-heading">
+        <div><p class="overline">Журнал путешественника</p><h2 id="journal-title">Читайте, чтобы ехать осознанно</h2></div>
+        <button class="pill-button compact" type="button">Все материалы <span>↗</span></button>
+      </div>
+      <div class="article-grid">
+        <article><img src="assets/image-08f82b3b48cc.jpg" alt="Треккинг в горах"><span>Практика · 8 минут</span><h3>Как подготовиться к треккингу и полюбить подъёмы</h3></article>
+        <article><img src="assets/image-f85c34cfabd4.jpg" alt="Тихая Япония"><span>Практика · 8 минут</span><h3>Тихая Япония: 7 мест вдали от толпы</h3></article>
+        <article><img src="assets/image-82c9a70c37f3.jpg" alt="Путешественник в Исландии"><span>Практика · 8 минут</span><h3>Что взять в Исландию в любое время года</h3></article>
+      </div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="faq-title">
+      <div><p class="overline">Есть вопросы?</p><h2 id="faq-title">Всё важное перед дорогой</h2><p>Не нашли ответ? Напишите нам — ответим в течение 15 минут.</p></div>
+      <div class="faq-list">
+        <details><summary>Что входит в стоимость тура?</summary><p>Проживание, программа, внутренние трансферы и работа команды.</p></details>
+        <details><summary>Можно ли изменить готовый маршрут?</summary><p>Да, для индивидуальных поездок мы адаптируем программу.</p></details>
+        <details><summary>Как оплатить путешествие?</summary><p>В личном кабинете после создания бронирования.</p></details>
+        <details><summary>Нужна ли специальная подготовка?</summary><p>Требования зависят от тура и указаны в карточке маршрута.</p></details>
+        <details><summary>Что делать, если планы изменились?</summary><p>Неоплаченную бронь можно отменить в личном кабинете.</p></details>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <p class="overline overline--lime">Ваше следующее путешествие</p>
+      <div><h2>Давайте найдём место, где вы почувствуете себя живыми</h2><button class="pill-button pill-button--light" type="button" data-scroll-search>Подобрать путешествие <span>↗</span></button></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-brand"><a class="logo" href="#top">ГОРИЗОНТ</a><p>Путешествия по России и миру, созданные с уважением к месту и вниманием к человеку.</p><div><span>vk</span><span>tg</span><span>yt</span></div></div>
+    <div><strong>Путешествия</strong><a href="#destinations">Россия</a><a href="#destinations">Европа</a><a href="#destinations">Азия</a><a href="#destinations">Экспедиции</a></div>
+    <div><strong>Горизонт</strong><a href="#about">О компании</a><a href="#about">Команда</a><a href="#reviews-title">Отзывы</a><a href="#journal">Журнал</a></div>
+    <div><strong>Помощь</strong><a href="#faq-title">FAQ</a><a href="#faq-title">Оплата</a><a href="#faq-title">Страхование</a><a href="mailto:hello@gorizont.travel">Контакты</a></div>
+    <div class="footer-contacts"><a href="tel:+74951202420">+7 495 120-24-20</a><a href="mailto:hello@gorizont.travel">hello@gorizont.travel</a><p>Ежедневно, 09:00–21:00<br>Москва, Хлебозавод №9</p></div>
+    <div class="footer-bottom"><span>© 2026 Горизонт. Все права защищены</span><span>Политика конфиденциальности · Оферта</span></div>
+  </footer>
+
+  <dialog id="auth-dialog" class="modal">
+    <form id="auth-form" class="modal-card" novalidate>
+      <button class="modal-close" type="button" data-close="auth-dialog" aria-label="Закрыть">×</button>
+      <p class="overline">Личный кабинет</p><h2>Войти в Горизонт</h2>
+      <p class="modal-hint">Тестовый аккаунт: u1@example.ru / travel2026</p>
+      <label>Email<input id="login-email" name="email" type="email" autocomplete="email" required></label>
+      <label>Пароль<input id="login-password" name="password" type="password" autocomplete="current-password" required></label>
+      <p class="form-error" id="auth-error" role="alert"></p>
+      <button class="pill-button full" id="login-submit" type="submit">Войти <span>↗</span></button>
+    </form>
+  </dialog>
+
+  <dialog id="tour-dialog" class="modal modal--wide">
+    <article class="modal-card tour-detail">
+      <button class="modal-close" type="button" data-close="tour-dialog" aria-label="Закрыть">×</button>
+      <img id="tour-detail-image" src="" alt="">
+      <div class="tour-detail-content">
+        <p class="overline" id="tour-detail-meta"></p><h2 id="tour-detail-title"></h2>
+        <p id="tour-detail-description"></p>
+        <dl><div><dt>Даты</dt><dd id="tour-detail-dates"></dd></div><div><dt>Маршрут</dt><dd id="tour-detail-route"></dd></div><div><dt>Стоимость</dt><dd id="tour-detail-price"></dd></div></dl>
+        <button class="pill-button" id="book-tour-button" type="button">Забронировать <span>↗</span></button>
+        <section class="tour-reviews"><h3>Отзывы</h3><div id="tour-review-list"></div><form id="review-form" novalidate><label>Ваша оценка<select id="review-rating"><option value="5">5</option><option value="4">4</option><option value="3">3</option></select></label><label>Отзыв<textarea id="review-text" rows="3" placeholder="Поделитесь впечатлением"></textarea></label><p class="form-error" id="review-error"></p><button class="text-button" type="submit">Отправить отзыв</button></form></section>
+      </div>
+    </article>
+  </dialog>
+
+  <dialog id="booking-dialog" class="modal">
+    <form id="booking-form" class="modal-card" novalidate>
+      <button class="modal-close" type="button" data-close="booking-dialog" aria-label="Закрыть">×</button>
+      <p class="overline">Бронирование</p><h2 id="booking-title">Оформить тур</h2>
+      <label>Имя путешественника<input id="booking-name" name="name" type="text" required></label>
+      <label>Телефон<input id="booking-phone" name="phone" type="tel" placeholder="+7 999 000-00-00" required></label>
+      <label>Количество человек<input id="booking-travelers" name="travelers" type="number" min="1" max="12" value="2" required></label>
+      <p class="form-error" id="booking-error"></p>
+      <button class="pill-button full" type="submit">Подтвердить бронь <span>↗</span></button>
+    </form>
+  </dialog>
+
+  <dialog id="account-dialog" class="modal modal--wide">
+    <div class="modal-card account-view">
+      <button class="modal-close" type="button" data-close="account-dialog" aria-label="Закрыть">×</button>
+      <div class="account-header"><div><p class="overline">Личный кабинет</p><h2 id="account-title">Профиль</h2></div><button class="text-button danger" id="logout-button" type="button">Выйти</button></div>
+      <nav class="account-tabs" aria-label="Разделы личного кабинета"><button type="button" data-account-tab="bookings" class="active">Мои бронирования</button><button type="button" data-account-tab="profile">Профиль</button><button type="button" id="admin-tab" data-account-tab="admin" hidden>Управление турами</button></nav>
+      <section id="bookings-panel" class="account-panel"><div id="bookings-list"></div></section>
+      <section id="profile-panel" class="account-panel" hidden><form id="profile-form"><label>Имя<input id="profile-name" type="text" required></label><label>Email<input id="profile-email" type="email" disabled></label><button class="pill-button compact" type="submit">Сохранить</button><p class="success-message" id="profile-success"></p></form></section>
+      <section id="admin-panel" class="account-panel" hidden><form id="admin-tour-form"><div class="form-grid"><label>Название<input id="admin-tour-name" required></label><label>Направление<input id="admin-tour-destination" required></label><label>Даты<input id="admin-tour-dates" placeholder="10–15 октября" required></label><label>Цена, ₽<input id="admin-tour-price" type="number" min="1" required></label></div><label>Маршрут<textarea id="admin-tour-route" rows="2" required></textarea></label><button class="pill-button compact" type="submit">Добавить тур</button><p class="success-message" id="admin-success"></p></form></section>
+    </div>
+  </dialog>
+
+  <dialog id="payment-dialog" class="modal">
+    <form id="payment-form" class="modal-card">
+      <button class="modal-close" type="button" data-close="payment-dialog" aria-label="Закрыть">×</button><p class="overline">Тестовая оплата</p><h2>Оплатить путешествие</h2><p id="payment-description"></p><label>Номер карты<input value="4242 4242 4242 4242" required></label><button class="pill-button full" type="submit">Оплатить <span>↗</span></button>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

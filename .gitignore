@@ -1,0 +1,70 @@
+# Локальные инструкции для AI-агентов
+AGENTS.md
+agents.md
+
+# Операционные системы
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+
+# IDE и редакторы
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.venv/
+venv/
+env/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# Node.js и JavaScript-инструменты
+node_modules/
+.npm/
+.yarn/
+.pnpm-store/
+.parcel-cache/
+.turbo/
+.vite/
+coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Playwright и другие тестовые артефакты
+playwright-report/
+test-results/
+blob-report/
+
+# Локальные настройки и секреты
+.env
+.env.*
+!.env.example
+*.local
+
+# Временные файлы и логи
+*.log
+*.tmp
+*.temp
+.cache/
+tmp/
+temp/
